@@ -1,14 +1,33 @@
 fn main() {
-    let s1 = gives_ownership();
-    let s2 = String::from("hello");
-    let s3 = takes_and_gives_back(s2);
+    let my_string = String::from("hello world");
+
+    let word = first_world(&my_string[..]);
+
+    println!("{}", word);    
+
+    let my_string_literal = "hello world";
+
+    println!("{}", word);
+
+    let word = first_world(&my_string_literal[..]);
+
+    println!("{}", word);
+
+    let word = first_world(my_string_literal);
+    
+    println!("{}", word);
+
 }
 
-fn gives_ownership() -> String {
-    let some_string = String::from("hello");
-    some_string
-}
+fn first_world(s: &str) -> &str {
+    let bytes = s.as_bytes();
 
-fn takes_and_gives_back(a_string: String) -> String {
-    a_string
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return &s[0..i];
+        }
+    }
+
+    &s[..]
+
 }
